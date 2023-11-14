@@ -12,6 +12,7 @@
                             <th>Name</th>
                             <th>Email</th>
                             <th>Image</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,6 +23,10 @@
                             <td>
                             <img src="{{asset('storage/'.$user->photo )}}" width="150px">
                             </td>
+                            <td>
+                                <a href="{{ route('editUser', $user->id) }}" class="btn btn-primary">Edit</a>
+                                <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">Hapus</button>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -30,4 +35,27 @@
         </div>
     </div>
 </div>
+@foreach($userss as $user)
+<div class="modal fade" id="deleteModal{{ $user->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Apakah Anda yakin ingin menghapus data?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tidak</button>
+                <form action="{{ route('deleteUser', $user->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Ya</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
 @endsection

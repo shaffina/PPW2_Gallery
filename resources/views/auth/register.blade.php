@@ -50,8 +50,8 @@
                                 @if ($errors->has ('photo'))
                                     <span class="text-danger">{{ $errors->first('photo') }}</span>
                                 @endif
+                                <img id="photo-preview" src="" alt="Preview Photo" style="max-width: 100px; max-height: 100px;">
                         </div>
-                    </div>
                     <div class="mb-3 row">
                         <input type="submit" class="col-md-3 offset-md-5 btn btn-primary" value="Register">
                     </div>
@@ -61,5 +61,19 @@
         </div>
     </div>
 </div>
+    <script>
+        document.getElementById('photo').addEventListener('change', function() {
+            var fileInput = this;
+            var img = document.getElementById('photo-preview');
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                img.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file);
+        });
+    </script>
 
 @endsection
